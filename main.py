@@ -93,7 +93,7 @@ COMMANDS = {
 COMMANDS_EXIT = ['exit', 'quit', 'good bye', 'q']
 
 
-def parser(text: str) -> tuple[callable, list]:
+def parser(text: str):
     for kwd, comand in COMMANDS.items():
         if text.lower().startswith(kwd):
             args = text[len(kwd):].strip().split(' ')
