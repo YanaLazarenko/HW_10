@@ -20,17 +20,7 @@ def input_error(func):
 
 
 @input_error
-def del_phone(args):
-    name = Name(args[0])
-    phone = Phone(args[1])
-    rec: Record = adress_book.get_record(str(name))
-    if rec:
-        return rec.remove_phone(phone)
-    raise KeyError
-
-
-@input_error
-def change_phone(args):
+def change_phone(*args):
     name = Name(args[0])
     old_phone = Phone(args[1])
     new_phone = Phone(args[2])
@@ -41,15 +31,15 @@ def change_phone(args):
 
 
 @input_error
-def whose_phone(args):
+def whose_phone(*args):
     for key, value in adress_book.items():
         if args[0] == str(key):
             return value
     raise KeyError
 
 
-@input_error
-def add(args):
+# @input_error
+def add(*args):
     if len(args) == 1:
         name = Name(args[0])
         rec: Record = adress_book.get(str(name))
@@ -68,11 +58,14 @@ def add(args):
         return adress_book.add_record(rec)
 
 
-def show_all(args):
-    return adress_book            
+def show_all(*args):
+    return adress_book
+    # for n, p in adress_book.items():
+    #     return n, p
+            
 
 
-def hello(args):
+def hello(*args):
     return 'How can I help you?'
 
 
@@ -87,7 +80,6 @@ COMMANDS = {
     'phone': whose_phone,
     'show all': show_all,
     'no comands': no_comand,
-    'del': del_phone,
 }
 
 COMMANDS_EXIT = ['exit', 'quit', 'good bye', 'q']
@@ -110,7 +102,11 @@ def main():
             break
         else:
             comand, args = parser(user_input)
-            result = comand(args)
+            if comand and len(args) > 1:
+                result = comand(*args)
+            else:
+                result = comand(args[0])
+
             print(result)
             # print(adress_book)
 
