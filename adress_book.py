@@ -44,12 +44,15 @@ class Record:
         return f'{phone} is already in {self.name} list'
     
     def remove_phone(self, phone: Phone):
-        if phone.value in [p.value for p in self.phones]:
-            self.phones.remove(phone)
-            return f'{phone} removed'
+        for p in self.phones:
+            if p.value == phone.value:
+                self.phones.remove(p)
+                return f'{phone} removed'
+            else:
+                continue
         return f'{phone} is not in your address book'
         
-    def change_phone(self, old_phone: Phone, new_phone:Phone):
+    def change_phone(self, old_phone: Phone, new_phone: Phone):
         for num, p in enumerate(self.phones):
             if old_phone.value == p.value:
                 self.phones[num] = new_phone

@@ -19,7 +19,7 @@ def input_error(func):
     return inner_func
 
 
-# @input_error
+@input_error
 def del_phone(*args):
     name = Name(args[0])
     phone = Phone(args[1])
@@ -50,13 +50,22 @@ def whose_phone(*args):
 
 @input_error
 def add(*args):
-    name = Name(args[0])
-    phone = Phone(args[1])
-    rec: Record = adress_book.get(str(name))
-    if rec:
-        return rec.add_phone(phone)
-    rec = Record(name, phone)
-    return adress_book.add_record(rec)
+    if len(args) == 1:
+        name = Name(args[0])
+        rec: Record = adress_book.get(str(name))
+        if rec:
+            return 'That name is alresdy in your contacts'
+        else:
+            rec = Record(name)
+            return adress_book.add_record(rec)
+    else:
+        name = Name(args[0])
+        phone = Phone(args[1])
+        rec: Record = adress_book.get(str(name))
+        if rec:
+            return rec.add_phone(phone)
+        rec = Record(name, phone)
+        return adress_book.add_record(rec)
 
 
 def show_all(*args):
