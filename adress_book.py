@@ -17,7 +17,6 @@ class Field:
 class Name(Field):
     ...
 
-
 class Phone(Field):
     ...
 
@@ -32,7 +31,8 @@ class Record:
             self.phones.append(phone)
 
     def __str__(self) -> str:
-        return f'{self.name}: {", ".join(str(p) for p in self.phones)}'
+        return '[{}{}]'.format(self.name, ", ".join(str(p) for p in self.phones))
+        # return f'{self.name}: {", ".join(str(p) for p in self.phones)}'
 
     # def __repr__(self):
     #     return str(self)
@@ -68,19 +68,17 @@ class Adress_book(UserDict):
         key = record.name.value
         self.data[key] = record
         return f'{key} added succesfuly'
-    # # else:
-    #     key = record.name
-    #     self.data[key] = []
-    #     return f'only name {key} added'
+
 
     def get_record(self, key):
         return self.data[key]
 
-    # def __repr__(self) -> str:
-    #     return str(self)
+    def __repr__(self) -> str:
+        return str(self)
 
     def __str__(self) -> str:
-        return '\n'.join(str(i) for i in self.data.values())
+        return '[{}]'.format(str(i) for i in self.data.values())
+        # return '\n'.join(str(i) for i in self.data.values())
 
 
 

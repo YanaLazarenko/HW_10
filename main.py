@@ -20,53 +20,37 @@ def input_error(func):
 
 
 @input_error
-def del_phone(args):
-    name = Name(args[0])
-    phone = Phone(args[1])
+def del_phone(name, phone):
     rec: Record = adress_book.get_record(str(name))
     if rec:
-        return rec.remove_phone(phone)
+        return rec.remove_phone(Phone(phone))
     raise KeyError
 
 
 @input_error
-def change_phone(args):
-    name = Name(args[0])
-    old_phone = Phone(args[1])
-    new_phone = Phone(args[2])
+def change_phone(name, old_phone, new_phone):
     rec: Record = adress_book.get_record(str(name))
     if rec:
-        return rec.change_phone(old_phone, new_phone)
+        return rec.change_phone(Phone(old_phone), Phone(new_phone))
     raise KeyError
 
 
 @input_error
-def whose_phone(args):
+def whose_phone(name):
     for key, value in adress_book.items():
-        if args[0] == str(key):
+        if Name(name).value == str(key):
             return value
     raise KeyError
 
 
 @input_error
-def add(args):
-    if len(args) == 1:
-        name = Name(args[0])
+def add(name, phone = None):
         rec: Record = adress_book.get(str(name))
         if rec:
-            return 'That name is alresdy in your contacts'
-        else:
-            rec = Record(name)
-            return adress_book.add_record(rec)
-    else:
-        name = Name(args[0])
-        phone = Phone(args[1])
-        rec: Record = adress_book.get(str(name))
-        if rec:
-            return rec.add_phone(phone)
-        rec = Record(name, phone)
+            return rec.add_phone(Phone(phone))
+        rec = Record(Name(name), Phone(phone))
         return adress_book.add_record(rec)
-
+   
 
 def show_all(args):
     return adress_book            
@@ -110,7 +94,7 @@ def main():
             break
         else:
             comand, args = parser(user_input)
-            result = comand(args)
+            result = comand(*args)
             print(result)
             # print(adress_book)
 
