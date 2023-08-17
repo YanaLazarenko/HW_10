@@ -31,11 +31,11 @@ class Record:
             self.phones.append(phone)
 
     def __str__(self) -> str:
-        return '[{}{}]'.format(self.name, ", ".join(str(p) for p in self.phones))
-        # return f'{self.name}: {", ".join(str(p) for p in self.phones)}'
+        # return self.value
+        return '{}: {}'.format(self.name, ", ".join(str(p) for p in self.phones))
 
-    # def __repr__(self):
-    #     return str(self)
+    def __repr__(self):
+        return str(self)
 
     def add_phone(self, phone: Phone):
         if phone.value not in [p.value for p in self.phones]:
@@ -69,7 +69,6 @@ class Adress_book(UserDict):
         self.data[key] = record
         return f'{key} added succesfuly'
 
-
     def get_record(self, key):
         return self.data[key]
 
@@ -77,8 +76,10 @@ class Adress_book(UserDict):
         return str(self)
 
     def __str__(self) -> str:
-        return '[{}]'.format(str(i) for i in self.data.values())
-        # return '\n'.join(str(i) for i in self.data.values())
-
-
-
+        contacts = ''
+        for record in self.data.values():
+            phones = ''
+            for phone in record.phones:
+                phones += f'{phone.value} '
+            contacts += f'{record.name}: {phones}\n'
+        return contacts      

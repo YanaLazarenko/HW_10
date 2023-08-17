@@ -96,7 +96,6 @@ def main():
             comand, args = parser(user_input)
             result = comand(*args)
             print(result)
-            # print(adress_book)
 
 
 if __name__ == '__main__':
